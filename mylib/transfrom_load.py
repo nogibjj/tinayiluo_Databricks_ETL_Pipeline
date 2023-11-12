@@ -38,5 +38,5 @@ def load(dataset="dbfs:/FileStore/tinayiluo_Databricks_ETL_Pipeline/airline-safe
     
     return "finished transform and load"
 
-
-load()
+if __name__ == "__main__":
+    load()

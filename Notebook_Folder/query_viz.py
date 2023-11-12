@@ -19,9 +19,15 @@ def query_transform():
     query = (
         "SELECT "
         "a.airline, "
+        "a.incidents_85_99, "
+        "b.incidents_00_14, "
+        "a.fatal_accidents_85_99, "
+        "b.fatal_accidents_00_14, "
+        "b.fatalities_85_99, "
+        "b.fatalities_00_14, "
         "(a.incidents_85_99 + b.incidents_00_14) AS total_incidents, "
-        "a.fatal_accidents_85_99 + b.fatalities_85_99 AS total_fatalities_85_99, "
-        "b.fatal_accidents_00_14 + b.fatalities_00_14 AS total_fatalities_00_14 "
+        "a.fatal_accidents_85_99 + b.fatal_accidents_00_14 AS total_fatal_accidents, "
+        "b.fatalities_85_99 + b.fatalities_00_14 AS total_fatalities "
         "FROM "
         "airline_safety1_delta AS a "
         "JOIN "
@@ -46,10 +52,10 @@ def viz():
     # Convert the query_result DataFrame to Pandas for plotting
     query_result_pd = query.toPandas()
 
-    # Bar Plot showing total Incidents vs Total Fatalities for all the Airlines (1985-1999 vs. 2000-2014)
+    # Bar Plot showing total Incidents vs Total Fatalities for all the Airlines (1985-2014)
     plt.figure(figsize=(15, 7))
-    query_result_pd.plot(x='airline', y=['total_incidents', 'total_fatalities_85_99', 'total_fatalities_00_14'], kind='bar')
-    plt.title('Total Incidents vs. Total Fatalities for Each Airline (1985-1999 vs. 2000-2014)')
+    query_result_pd.plot(x='airline', y=['total_incidents', 'total_fatal_accidents', 'total_fatalities'], kind='bar')
+    plt.title('Total Incidents vs. Fatal Accidents vs. Total Fatalities for Each Airline (1985-2014)')
     plt.ylabel('Counts')
     plt.xlabel('Airline')
     plt.xticks(rotation=45)
@@ -57,7 +63,7 @@ def viz():
     plt.tight_layout()
     plt.show()
 
-    # Bar Plot showing total Incidents vs. Total Fatalities for Alaska Airline (1985-1999 vs. 2000-2014)
+    # Bar Plot showing total Incidents vs. Total Fatalities for selected Airline (1985-2014)
     # Filter for the specific airline
     selected_airline = 'Air France'  
     airline_data = query_result_pd[query_result_pd['airline'] == selected_airline]
@@ -67,15 +73,37 @@ def viz():
         print(f"No data available for {selected_airline}.")
         return
 
-    # Bar Plot showing total Incidents vs. Total Fatalities for the selected Airline (1985-1999 vs. 2000-2014)
+    # Bar Plot showing total Incidents vs. Total Fatalities for the selected Airline (1985-2014)
     plt.figure(figsize=(10, 6))
-    airline_data.plot(x='airline', y=['total_incidents', 'total_fatalities_85_99', 'total_fatalities_00_14'], kind='bar')
-    plt.title(f'Total Incidents vs. Total Fatalities for {selected_airline} (1985-1999 vs. 2000-2014)')
+    airline_data.plot(x='airline', y=['total_incidents', 'total_fatal_accidents', 'total_fatalities'], kind='bar')
+    plt.title(f'Total Incidents vs. Fatal Accidents vs. Total Fatalities for {selected_airline} (1985-2014)')
     plt.ylabel('Counts')
     plt.xlabel('Airline')
     plt.xticks(rotation=0)  # No need to rotate for a single airline
     plt.legend(title='Metrics')
     plt.tight_layout()
+    plt.show()
+    
+    # Prepare data for plotting
+    periods = ['1985-1999', '2000-2014']
+
+    # Initialize the figure
+    plt.figure(figsize=(14, 8))
+
+    # Plot trend lines for each airline
+    for index, row in query_result_pd.iterrows():
+        fatalities = [row['fatalities_85_99'], row['fatalities_00_14']]
+        plt.plot(periods, fatalities, marker='o', label=row['airline'])
+
+    # Customize the plot
+    plt.title('Total Fatalities Change for Each Airline (1985-1999 vs 2000-2014)')
+    plt.ylabel('Number of Fatalities')
+    plt.xlabel('Time Period')
+    plt.legend(title='Airlines', bbox_to_anchor=(1.05, 1), loc='upper left')
+    plt.grid(True)
+    plt.tight_layout()
+
+    # Show the plot
     plt.show()
     
     # Select a specific airline 
@@ -84,7 +112,7 @@ def viz():
 
     # Prepare data for plotting
     periods = ['1985-1999', '2000-2014']
-    fatalities = [airline_data['total_fatalities_85_99'].values[0], airline_data['total_fatalities_00_14'].values[0]]
+    fatalities = [airline_data['fatalities_85_99'].values[0], airline_data['fatalities_00_14'].values[0]]
 
     # Plotting
     plt.figure(figsize=(8, 5))

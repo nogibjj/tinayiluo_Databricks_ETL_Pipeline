@@ -63,29 +63,6 @@ def viz():
     plt.legend(title='Metrics')
     plt.tight_layout()
     plt.show()
-
-    # Bar Plot showing total Incidents vs. Total Fatalities for selected Airline (1985-2014)
-    # Filter for the specific airline
-    selected_airline = 'Air France'  
-    airline_data = query_result_pd[query_result_pd['airline'] == selected_airline]
-
-    # Check if the filtered DataFrame is empty
-    if airline_data.empty:
-        print(f"No data available for {selected_airline}.")
-        return
-
-    # Bar Plot showing total Incidents vs. Total Fatalities for the selected Airline (1985-2014)
-    plt.figure(figsize=(10, 6))
-    airline_data.plot(x='airline', y=['total_incidents', 'total_fatal_accidents', 
-                                      'total_fatalities'], kind='bar')
-    plt.title(f'Total Incidents vs. Fatal Accidents vs. '
-              f'Total Fatalities for {selected_airline} (1985-2014)')
-    plt.ylabel('Counts')
-    plt.xlabel('Airline')
-    plt.xticks(rotation=0)  # No need to rotate for a single airline
-    plt.legend(title='Metrics')
-    plt.tight_layout()
-    plt.show()
     
     # Prepare data for plotting
     periods = ['1985-1999', '2000-2014']
@@ -109,28 +86,6 @@ def viz():
 
     # Show the plot
     plt.show()
-    
-    # Select a specific airline 
-    selected_airline = 'Air France'  
-    airline_data = query_result_pd[query_result_pd['airline'] == selected_airline]
-
-    # Prepare data for plotting
-    periods = ['1985-1999', '2000-2014']
-    fatalities_85_99 = airline_data['fatalities_85_99'].values[0]
-    fatalities_00_14 = airline_data['fatalities_00_14'].values[0]
-    fatalities = [fatalities_85_99, fatalities_00_14]
-
-    # Plotting
-    plt.figure(figsize=(8, 5))
-    plt.plot(periods, fatalities, marker='o')
-    plt.title(f'Total Fatalities Change for {selected_airline} '
-              '(1985-1999 vs 2000-2014)')
-    plt.ylabel('Number of Fatalities')
-    plt.xlabel('Time Period')
-    plt.grid(True)
-    plt.tight_layout()
-    plt.show()
-
 
 if __name__ == "__main__":
     query_transform()

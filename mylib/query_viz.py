@@ -1,7 +1,3 @@
-"""
-query and viz file
-"""
-
 from pyspark.sql import SparkSession
 import matplotlib.pyplot as plt
 
@@ -25,7 +21,8 @@ def query_transform():
         "b.fatalities_85_99, "
         "b.fatalities_00_14, "
         "(a.incidents_85_99 + b.incidents_00_14) AS total_incidents, "
-        "a.fatal_accidents_85_99 + b.fatal_accidents_00_14 AS total_fatal_accidents, "
+        "a.fatal_accidents_85_99 + b.fatal_accidents_00_14 "
+        "AS total_fatal_accidents, "
         "b.fatalities_85_99 + b.fatalities_00_14 AS total_fatalities "
         "FROM "
         "airline_safety1_delta AS a "
@@ -38,6 +35,7 @@ def query_transform():
 
     query_result = spark.sql(query)
     return query_result
+
 
 # sample viz for project
 def viz():
@@ -53,7 +51,8 @@ def viz():
 
     # Bar Plot showing total Incidents vs Total Fatalities for all the Airlines (1985-2014)
     plt.figure(figsize=(15, 7))
-    query_result_pd.plot(x='airline', y=['total_incidents', 'total_fatal_accidents', 'total_fatalities'], kind='bar')
+    query_result_pd.plot(x='airline', y=['total_incidents', 'total_fatal_accidents', 
+                                         'total_fatalities'], kind='bar')
     plt.title('Total Incidents vs. Fatal Accidents vs. Total Fatalities for Each Airline (1985-2014)')
     plt.ylabel('Counts')
     plt.xlabel('Airline')
@@ -74,7 +73,8 @@ def viz():
 
     # Bar Plot showing total Incidents vs. Total Fatalities for the selected Airline (1985-2014)
     plt.figure(figsize=(10, 6))
-    airline_data.plot(x='airline', y=['total_incidents', 'total_fatal_accidents', 'total_fatalities'], kind='bar')
+    airline_data.plot(x='airline', y=['total_incidents', 'total_fatal_accidents', 
+                                      'total_fatalities'], kind='bar')
     plt.title(f'Total Incidents vs. Fatal Accidents vs. Total Fatalities for {selected_airline} (1985-2014)')
     plt.ylabel('Counts')
     plt.xlabel('Airline')

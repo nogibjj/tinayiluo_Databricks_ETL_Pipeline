@@ -103,7 +103,7 @@ matplotlib
 
   + Defines a Spark SQL query to perform a predefined transformation on the retrieved data.
 
-        + `query_transform`:  creates a Spark session with the application name "Query" and runs a SQL query on two joined Delta Lake tables (`airline_safety1_delta` and `airline_safety2_delta`). The query selects and aggregates data for airline incidents, fatal accidents, and fatalities across two time periods (1985-1999 and 2000-2014). It returns the result as a Spark DataFrame.
+    + `query_transform`:  creates a Spark session with the application name "Query" and runs a SQL query on two joined Delta Lake tables (`airline_safety1_delta` and `airline_safety2_delta`). The query selects and aggregates data for airline incidents, fatal accidents, and fatalities across two time periods (1985-1999 and 2000-2014). It returns the result as a Spark DataFrame.
         
         ```sql
         spark = SparkSession.builder.appName("Query").getOrCreate()
@@ -131,13 +131,13 @@ matplotlib
         ```
   + Uses the predifined transformation Spark dataframe to create vizualizations
 
-        + `viz`: first calls `query_transform` to get the query result. It performs data validation by checking if the DataFrame has rows. If not, it indicates that no data is available.
+      + `viz`: first calls `query_transform` to get the query result. It performs data validation by checking if the DataFrame has rows. If not, it indicates that no data is available.
 
-        + Data Conversion and Visualization: converts the Spark DataFrame to a Pandas DataFrame for visualization. 
+      + Data Conversion and Visualization: converts the Spark DataFrame to a Pandas DataFrame for visualization. 
 
-           + Creates a bar plot to show the total number of incidents vs.  total number of fatal accidents vs. total fatalities for the top 10 airlines (sorted by total incidents) across the two time periods (1985-1999 vs. 2000-2014).
+          + Creates a bar plot to show the total number of incidents vs.  total number of fatal accidents vs. total fatalities for the top 10 airlines (sorted by total incidents) across the two time periods (1985-1999 vs. 2000-2014).
 
-           + Creates a line plot to visualize total fatalities change for each of the top 10 airlines (sorted by total incidents) across the two time periods (1985-1999 vs. 2000-2014).
+          + Creates a line plot to visualize total fatalities change for each of the top 10 airlines (sorted by total incidents) across the two time periods (1985-1999 vs. 2000-2014).
 
 ### Error Handling and Data Validation
 
@@ -157,11 +157,11 @@ matplotlib
 
 ### Data Source, Data Sink (Delta Lake) and ETL pipeline:
 
-Extract task (Data Source): `mylib/extract.py`
++ Extract task (Data Source): `mylib/extract.py`
 
-Transform and Load Task (Data Sink): `mylib/transform_load.py`
++ Transform and Load Task (Data Sink): `mylib/transform_load.py`
 
-Query and Viz Task: `mylib/query_viz.py`
++ Query and Viz Task: `mylib/query_viz.py`
 
 <img width="738" alt="Screen Shot 2023-11-11 at 10 51 57 PM" src="https://github.com/nogibjj/tinayiluo_Databricks_ETL_Pipeline/assets/143360909/beedd84c-511b-4b31-aa43-2b5331c54563">
 
@@ -190,11 +190,17 @@ Specific Airline Performance: Some airlines, such as Delta/Northwest and Saudi A
 Challenges for Some: Conversely, airlines like American and Air France have shown a significant increase in fatalities. This would be a point of concern, and it's recommended that management conduct an in-depth review of safety protocols, fleet maintenance, and pilot training programs. Understanding the reasons behind the increase is critical to reversing this trend.
 
 ### References 
+
 https://github.com/nogibjj/python-ruff-template
+
 https://hypercodelab.com/docs/spark/databricks-platform/global-env-variables
+
 https://docs.databricks.com/en/dbfs/filestore.html
+
 https://learn.microsoft.com/en-us/azure/databricks/delta/
+
 https://learn.microsoft.com/en-us/training/paths/data-engineer-azure-databricks/
+
 https://docs.databricks.com/en/getting-started/data-pipeline-get-started.html
 
 

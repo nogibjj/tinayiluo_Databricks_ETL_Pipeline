@@ -165,6 +165,8 @@ matplotlib
 
 <img width="738" alt="Screen Shot 2023-11-11 at 10 51 57 PM" src="https://github.com/nogibjj/tinayiluo_Databricks_ETL_Pipeline/assets/143360909/beedd84c-511b-4b31-aa43-2b5331c54563">
 
+<img width="885" alt="Screen Shot 2023-11-12 at 6 40 08 PM" src="https://github.com/nogibjj/tinayiluo_Databricks_ETL_Pipeline/assets/143360909/1ef4d993-2a75-4756-8c98-9186348b0b54">
+
 <img width="1224" alt="Screen Shot 2023-11-11 at 10 51 22 PM" src="https://github.com/nogibjj/tinayiluo_Databricks_ETL_Pipeline/assets/143360909/92264b0c-34ad-402f-adaa-7846f93d5fc3">
 
 ###  Data Visualizations

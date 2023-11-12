@@ -51,7 +51,7 @@ def viz():
     # Convert the query_result DataFrame to Pandas for plotting
     query_result_pd = query.toPandas()
 
-    # Bar Plot showing total Incidents vs Total Fatalities for all the Airlines (1985-2014)
+    # Bar Plot 
     plt.figure(figsize=(15, 7))
     query_result_pd.plot(x='airline', y=['total_incidents', 'total_fatal_accidents', 
                                          'total_fatalities'], kind='bar')

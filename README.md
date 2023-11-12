@@ -175,7 +175,7 @@ matplotlib
 
 ### Conclusion and Recommendations
 
-[Airline Safety ETL Pipeline Analysis](./Notebook_Folder/query_viz.py)
+[Airline Safety ETL Pipeline Analysis](./Notebook_Folder/Airline_Safety_ETL_Pipeline_Analysis.ipynb - Databricks.pdf)
 
 + Visualization 1: Total Incidents vs. Fatal Accidents vs. Total Fatalities for Each Airline (1985-2014)
 

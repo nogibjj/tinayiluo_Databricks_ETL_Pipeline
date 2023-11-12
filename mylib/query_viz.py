@@ -2,7 +2,6 @@ from pyspark.sql import SparkSession
 import matplotlib.pyplot as plt
 
 
-# sample query
 def query_transform():
     """
     Run a predefined SQL query on a Spark DataFrame.
@@ -14,8 +13,10 @@ def query_transform():
     query = (
         "SELECT a.airline, "
         "(a.incidents_85_99 + b.incidents_00_14) AS total_incidents, "
-        "a.fatal_accidents_85_99 + b.fatalities_85_99 AS total_fatalities_85_99, "
-        "b.fatal_accidents_00_14 + b.fatalities_00_14 AS total_fatalities_00_14 "
+        "a.fatal_accidents_85_99 + b.fatalities_85_99 AS "
+        "total_fatalities_85_99, "
+        "b.fatal_accidents_00_14 + b.fatalities_00_14 AS "
+        "total_fatalities_00_14 "
         "FROM airline_safety1_delta AS a "
         "JOIN airline_safety2_delta AS b ON a.id = b.id "
         "ORDER BY total_incidents DESC LIMIT 10"
@@ -24,7 +25,7 @@ def query_transform():
     query_result = spark.sql(query)
     return query_result
 
-# sample viz for project
+
 def viz():
     query_result = query_transform()
     count = query_result.count()
@@ -36,13 +37,16 @@ def viz():
     # Convert the query_result DataFrame to Pandas for plotting
     query_result_pd = query_result.toPandas()
 
-    # Bar Plot showing total Incidents vs Total Fatalities for all the Airlines
+    # Bar Plot showing total Incidents vs Total Fatalities 
     plt.figure(figsize=(15, 7))
     query_result_pd.plot(
         x='airline', y=['total_incidents', 'total_fatalities_85_99', 
         'total_fatalities_00_14'], kind='bar'
     )
-    plt.title('Total Incidents vs. Total Fatalities for Each Airline (1985-1999 vs. 2000-2014)')
+    plt.title(
+        'Total Incidents vs. Total Fatalities for Each Airline '
+        '(1985-1999 vs. 2000-2014)'
+    )
     plt.ylabel('Counts')
     plt.xlabel('Airline')
     plt.xticks(rotation=45)
@@ -59,13 +63,16 @@ def viz():
         print(f"No data available for {selected_airline}.")
         return
 
-    # Bar Plot showing total Incidents vs. Total Fatalities for the selected Airline
+    # Bar Plot showing total Incidents vs. Total Fatalities
     plt.figure(figsize=(10, 6))
     airline_data.plot(
         x='airline', y=['total_incidents', 'total_fatalities_85_99', 
         'total_fatalities_00_14'], kind='bar'
     )
-    plt.title(f'Total Incidents vs. Total Fatalities for {selected_airline} (1985-1999 vs. 2000-2014)')
+    plt.title(
+        f'Total Incidents vs. Total Fatalities for {selected_airline} '
+        '(1985-1999 vs. 2000-2014)'
+    )
     plt.ylabel('Counts')
     plt.xlabel('Airline')
     plt.xticks(rotation=0)  # No need to rotate for a single airline
@@ -83,7 +90,10 @@ def viz():
     # Plotting
     plt.figure(figsize=(8, 5))
     plt.plot(periods, fatalities, marker='o')
-    plt.title(f'Total Fatalities Change for {selected_airline} (1985-1999 vs 2000-2014)')
+    plt.title(
+        f'Total Fatalities Change for {selected_airline} '
+        '(1985-1999 vs 2000-2014)'
+    )
     plt.ylabel('Number of Fatalities')
     plt.xlabel('Time Period')
     plt.grid(True)

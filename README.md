@@ -1,40 +1,200 @@
-[![CI](https://github.com/nogibjj/python-ruff-template/actions/workflows/cicd.yml/badge.svg)](https://github.com/nogibjj/python-ruff-template/actions/workflows/cicd.yml)
+[![CI](https://github.com/nogibjj/tinayiluo_Databricks_ETL_Pipeline/actions/workflows/cicd.yml/badge.svg)](https://github.com/nogibjj/tinayiluo_Databricks_ETL_Pipeline/actions/workflows/cicd.yml)
 
-Individual Project #3: Databricks ETL (Extract Transform Load) Pipeline
-Lead Instructor: Noah Gift
-Requirements
-Your project should include the following:
-* A well-documented Databricks notebook that performs ETL (Extract, Transform, Load) operations, checked into the repository.
-* Usage of Delta Lake for data storage.
-* Usage of Spark SQL for data transformations.
-* Proper error handling and data validation.
-* Visualization of the transformed data.
-* An automated trigger to initiate the pipeline.
-* README.md: A file that clearly explains what the project does, its dependencies, how to run the program, and concludes with actionable and data-driven recommendations to a hypothetical management team.
-* Video Demo: A YouTube link in README.md showing a clear, concise walkthrough and demonstration of your ETL pipeline, including the automated trigger and recommendations to the management team.
-Grading Rubric
-Your project will be graded on the following criteria:
-* Databricks ETL Pipeline (20 points): Your Databricks notebook correctly extracts data, performs transformations, and loads the data into a final output.
-    * Extract operation (7 points): Your notebook correctly extracts data from the source data.
-    * Transform operation (7 points): Your notebook correctly transforms the extracted data.
-    * Load operation (6 points): Your notebook correctly loads the transformed data into the destination data store.
-* Usage of Delta Lake (20 points): Your ETL pipeline correctly utilizes Delta Lake for data storage.
-    * Correct setup and usage of Delta Lake (10 points): Your notebook correctly sets up Delta Lake and uses it to store the transformed data.
-    * Data validation checks (10 points): Your notebook includes data validation checks to ensure the quality of the data.
-* Usage of Spark SQL (20 points): Your pipeline effectively utilizes Spark SQL for data transformations.
-    * Correct use of Spark SQL (10 points): Your notebook correctly uses Spark SQL to perform the data transformations.
-    * Effectiveness of data transformations (10 points): The data transformations are effective in cleaning and preparing the data for analysis.
-* Visualization and Conclusion (15 points): Your project includes a visualization of the transformed data and a data-driven, actionable recommendation for a management team, both in the notebook and README.md.
-    * Quality of data visualization (7 points): The visualization is clear, concise, and effective in communicating the results of the data analysis.
-    * Actionable, data-driven recommendation (8 points): The recommendation is based on the results of the data analysis and is actionable by the management team.
-* README.md (10 points): The README.md file is clear, concise, and guides the user on how to run the program and includes the conclusion and recommendation.
-    * Clarity and completeness (5 points): The README.md file is easy to read and understand and includes all the information necessary 
-* to run the program.
-* Inclusion of conclusion and recommendation (5 points): The README.md file includes the conclusion and recommendation from the project.
-* Automated Trigger (10 points): Your project includes an automated trigger to initiate the pipeline, demonstrated in the video.
-    * Correct setup of the trigger (5 points): The trigger is correctly set up to initiate the pipeline on a schedule or event.
-    * Effective demonstration in video (5 points): The video demonstrates the correct setup and usage of the trigger.
-* Demo Video (5 points): A 2-5 minute video explaining the project and demonstrating its functionality is included. The video should be high-quality (both audio and visual), not exceed the given time limit, and be linked in the README via a private or public YouTube link.
-    * Clarity of explanation (2 points): The video clearly explains the project and its functionality.
-    * Quality demonstration of the project (2 points): The video demonstrates the project and its functionality in a clear and concise manner.
-    * Quality of video and audio (1 point): The video is high-quality and easy to understand.
+Databricks ETL (Extract Transform Load) Pipeline
+
+### Introduction 
+
+This project develops a Databricks ETL(Extract, Transform, Load) Pipeline for retrieving and processing airline safety datasets, featuring a well-documented notebook for ETL operations, Delta Lake for storage, and Spark SQL for transformations. It ensures data integrity through robust error handling and data validation and includes data visualizations for insights. An automated Databricks API trigger highlights the focus on automation and continuous processing.
+
+The workflow includes running a Makefile to perform tasks such as installation (`make install`), testing (`make test`), code formatting (`make format`) with Python Black, linting (`make lint`) with Ruff, and an all-inclusive task (`make all`) using `Github Actions`. This automation streamlines the data analysis process and enhances code quality.
+
+### Preparation
+
++ I used the nogibjj/python-ruff-template.
+
++ I chose the Airline safety dataset `airline-safety.csv` from Github.
+
+### Dataset Description
+
+The dataset `airline-safety.csv` originates from the Aviation Safety Network and consolidates safety-related information for 56 airlines in a CSV file. It encompasses data on available seat kilometers flown every week and provides a detailed record of incidents, fatal accidents, and fatalities, each segregated into two time frames: 1985–1999 and 2000–2014.
+
+#### [Resources](https://github.com/fivethirtyeight/data/tree/master/airline-safety) 
+
+### Databricks Installations and Environment Setup 
+
++ Create a Databricks workspace on Azure
+
++ Connect GitHub account to Databricks Workspace
+
++ Create global init script for cluster start to store environment variables
+
+  + Establishes a connection to the Databricks environment using environment variables for authentication (SERVER_HOSTNAME and ACCESS_TOKEN).
+
++ Create a Databricks cluster that supports Pyspark
+
++ Clone Github repo into Databricks workspace
+
++ Create a job on Databricks to build an ETL pipeline
+
++ Create dependencies in `requirements.txt`
+
+```
+#devops
+black==22.3.0
+click==8.1.3 
+pytest==7.1.3
+pytest-cov==4.0.0
+#pylint==2.15.3
+#rust based linter
+ruff==0.0.284
+boto3==1.24.87
+#web
+fastapi==0.85.0
+uvicorn==0.18.3
+#databricks
+pandas
+python-dotenv
+databricks-sql-connector
+matplotlib
+```
+### Usage and Functionality 
+
+`mian.py`: imports functions from three different modules: `extract` from the `mylib.extract` module, `load` from the `mylib.transform_load` module, and both `query_transform` and `viz` from the `mylib.query_viz` module. 
+
+(1) Data Extraction `mylib/extract.py`:
+
+  + Environment Setup: loads environment variables using `dotenv`, includes the server hostname and access token necessary for API authentication.
+
+  + Utilizes the `requests` library to fetch airline safety data from specified URLs.
+
+    + API Communication Functions: defines several functions to interact with the Databricks REST API:
+
+        + `perform_query`: Makes API requests and returns the response in JSON format.
+
+        + `mkdirs`: Creates directories in Databricks FileStore.
+
+        + `create`: Initializes file creation in the FileStore.
+
+        + `add_block`: Adds a block of data to a file in the FileStore.
+
+        + `close`: Closes the file operation.
+
+    + File Upload Process: The` put_file_from_url` function downloads a file from a given URL and uploads it to the Databricks FileStore, handling the data in blocks and encoding it in base64 format. It also ensures that files are overwritten if specified.
+
+  + `extract`: First ensures the target directory exists, then downloads and stores the data in the Databricks FileStore.
+
+(2) Data Transformation and Load `mylib/transform_load.py`:
+
+  + `load`: Transform the csv file into a Spark dataframe which is then converted into two Delta Lake Tables `airline_safety1_delta` and `airline_safety2_delta` and stored in the Databricks environment
+
+        + Creating SparkSession: create `sparksession` in the application name "Read CSV". 
+
+        + Reading CSV Data: loads the CSV data from the specified dataset path. 
+
+        + Splitting Columns: splits the columns of the DataFrame into two halves. 
+
+        + Creating Two New DataFrames: Two new DataFrames are created by selecting the respective halves of the columns from the original DataFrame.
+
+        + Adding Unique IDs: Both new DataFrames (`airline_safety_df1` and `airline_safety_df2`) are augmented with a new column named "id", populated with unique IDs generated by `monotonically_increasing_id()`.
+
+        + Writing to Delta Lake Tables: Each DataFrame is then written to separate Delta Lake tables (a storage format for big data) named `airline_safety1_delta` and `airline_safety2_delta`. The `overwrite` mode is used, meaning any existing data in the tables will be replaced.
+
+(3) Query Transformation and Visualization `mylib/query_viz.py`:
+
+  + Defines a Spark SQL query to perform a predefined transformation on the retrieved data.
+
+        + `query_transform`:  creates a Spark session with the application name "Query" and runs a SQL query on two joined Delta Lake tables (`airline_safety1_delta` and `airline_safety2_delta`). The query selects and aggregates data for airline incidents, fatal accidents, and fatalities across two time periods (1985-1999 and 2000-2014). It returns the result as a Spark DataFrame.
+        
+        ```sql
+        spark = SparkSession.builder.appName("Query").getOrCreate()
+            query = (
+                "SELECT "
+                "a.airline, "
+                "a.incidents_85_99, "
+                "b.incidents_00_14, "
+                "a.fatal_accidents_85_99, "
+                "b.fatal_accidents_00_14, "
+                "b.fatalities_85_99, "
+                "b.fatalities_00_14, "
+                "(a.incidents_85_99 + b.incidents_00_14) AS total_incidents, "
+                "a.fatal_accidents_85_99 + b.fatal_accidents_00_14 AS total_fatal_accidents, "
+                "b.fatalities_85_99 + b.fatalities_00_14 AS total_fatalities "
+                "FROM "
+                "airline_safety1_delta AS a "
+                "JOIN "
+                "airline_safety2_delta AS b "
+                "ON a.id = b.id "
+                "ORDER BY total_incidents DESC "
+                "LIMIT 10"
+            )
+
+        ```
+  + Uses the predifined transformation Spark dataframe to create vizualizations
+
+        + `viz`: first calls `query_transform` to get the query result. It performs data validation by checking if the DataFrame has rows. If not, it indicates that no data is available.
+
+        + Data Conversion and Visualization: converts the Spark DataFrame to a Pandas DataFrame for visualization. 
+
+           + Creates a bar plot to show the total number of incidents vs.  total number of fatal accidents vs. total fatalities for the top 10 airlines (sorted by total incidents) across the two time periods (1985-1999 vs. 2000-2014).
+
+           + Creates a line plot to visualize total fatalities change for each of the top 10 airlines (sorted by total incidents) across the two time periods (1985-1999 vs. 2000-2014).
+
+### Error Handling and Data Validation
+
+`test_main.py` File Path Checking for `make test`:
+
++ Utilizes the Databricks API and the requests library
+
++ Implements a function to check if a specified file path exists in the Databricks FileStore.
+
+### Automated Trigger to Initiate Pipeline via Github Push:*
+
+`run_job.py`: utilize the Databricks API to run a job on the Databricks workspace such that when a user pushes to this repo it will initiate a job run
+
+### Automation and GitHub Actions
+
+`Makefile` & `cicd.yml` : `make install`, `make test`,`make format`, `make lint`, `make all`, `make job`
+
+### Data Source, Data Sink (Delta Lake) and ETL pipeline:
+
+Extract task (Data Source): `mylib/extract.py`
+
+Transform and Load Task (Data Sink): `mylib/transform_load.py`
+
+Query and Viz Task: `mylib/query_viz.py`
+
+<img width="738" alt="Screen Shot 2023-11-11 at 10 51 57 PM" src="https://github.com/nogibjj/tinayiluo_Databricks_ETL_Pipeline/assets/143360909/beedd84c-511b-4b31-aa43-2b5331c54563">
+
+<img width="1224" alt="Screen Shot 2023-11-11 at 10 51 22 PM" src="https://github.com/nogibjj/tinayiluo_Databricks_ETL_Pipeline/assets/143360909/92264b0c-34ad-402f-adaa-7846f93d5fc3">
+
+###  Data Visualizations
+
+<img width="729" alt="Screen Shot 2023-11-12 at 4 02 32 PM" src="https://github.com/nogibjj/tinayiluo_Databricks_ETL_Pipeline/assets/143360909/e1ab8553-525f-4ee4-89a5-238587814a89">
+
+<img width="1126" alt="Screen Shot 2023-11-12 at 4 03 05 PM" src="https://github.com/nogibjj/tinayiluo_Databricks_ETL_Pipeline/assets/143360909/ab3286dc-a935-4a3c-bc00-9fd4b74c524b">
+
+### Conclusion and Recommendations
+
+[Airline Safety ETL Pipeline Analysis](./Notebook_Folder/query_viz.ipynb)
+
+Visualization 1: Total Incidents vs. Fatal Accidents vs. Total Fatalities for Each Airline (1985-2014)
+
+Incidents vs. Fatalities Disparity: It is noteworthy that some airlines, such as Aeroflot, with a high number of total incidents do not necessarily have a proportionately high number of fatalities. This could suggest effective emergency response and safety procedures that mitigate the severity of incidents. 
+
+Visualization 2: Total Fatalities Change for Each Airline (1985-1999 vs 2000-2014)
+
+Overall Improvement: Most airlines have shown a decrease in the number of fatalities over the two time periods, which is a positive trend. This suggests that overall, safety may have improved in the airline industry. 
+
+Specific Airline Performance: Some airlines, such as Delta/Northwest and Saudi Arabian, have shown a significant decrease in fatalities, indicating a substantial improvement in their safety record. These airlines could be examined as case studies to understand what specific actions contributed to this improvement. 
+
+Challenges for Some: Conversely, airlines like American and Air France have shown a significant increase in fatalities. This would be a point of concern, and it's recommended that management conduct an in-depth review of safety protocols, fleet maintenance, and pilot training programs. Understanding the reasons behind the increase is critical to reversing this trend.
+
+### References 
+https://github.com/nogibjj/python-ruff-template
+https://hypercodelab.com/docs/spark/databricks-platform/global-env-variables
+https://docs.databricks.com/en/dbfs/filestore.html
+https://learn.microsoft.com/en-us/azure/databricks/delta/
+https://learn.microsoft.com/en-us/training/paths/data-engineer-azure-databricks/
+https://docs.databricks.com/en/getting-started/data-pipeline-get-started.html
+
+

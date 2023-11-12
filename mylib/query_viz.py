@@ -55,8 +55,9 @@ def viz():
     plt.figure(figsize=(15, 7))
     query_result_pd.plot(x='airline', y=['total_incidents', 'total_fatal_accidents', 
                                          'total_fatalities'], kind='bar')
-    plt.title('Total Incidents vs. Fatal Accidents vs. '
-              'Total Fatalities for Each Airline (1985-2014)')
+    plot_title = ('Total Incidents vs. Fatal Accidents vs. '
+                  'Total Fatalities for Each Airline (1985-2014)')
+    plt.title(plot_title)
     plt.ylabel('Counts')
     plt.xlabel('Airline')
     plt.xticks(rotation=45)

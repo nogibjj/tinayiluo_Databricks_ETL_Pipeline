@@ -1,7 +1,8 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import monotonically_increasing_id
 
-def load(dataset="dbfs:/FileStore/tinayiluo_Databricks_ETL_Pipeline/airline-safety.csv"):
+def load(dataset="dbfs:/FileStore/tinayiluo_Databricks_ETL_Pipeline/"
+                "airline-safety.csv"):
     spark = SparkSession.builder.appName("Read CSV").getOrCreate()
     # load csv and transform it by inferring schema
     airline_safety_df = spark.read.csv(

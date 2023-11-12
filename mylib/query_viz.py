@@ -23,7 +23,8 @@ def query_transform():
         "(a.incidents_85_99 + b.incidents_00_14) AS total_incidents, "
         "a.fatal_accidents_85_99 + b.fatal_accidents_00_14 "
         "AS total_fatal_accidents, "
-        "b.fatalities_85_99 + b.fatalities_00_14 AS total_fatalities "
+        "b.fatalities_85_99 + b.fatalities_00_14 "
+        "AS total_fatalities "
         "FROM "
         "airline_safety1_delta AS a "
         "JOIN "
@@ -32,6 +33,7 @@ def query_transform():
         "ORDER BY total_incidents DESC "
         "LIMIT 10"
     )
+
 
     query_result = spark.sql(query)
     return query_result
@@ -53,7 +55,8 @@ def viz():
     plt.figure(figsize=(15, 7))
     query_result_pd.plot(x='airline', y=['total_incidents', 'total_fatal_accidents', 
                                          'total_fatalities'], kind='bar')
-    plt.title('Total Incidents vs. Fatal Accidents vs. Total Fatalities for Each Airline (1985-2014)')
+    plt.title('Total Incidents vs. Fatal Accidents vs. '
+              'Total Fatalities for Each Airline (1985-2014)')
     plt.ylabel('Counts')
     plt.xlabel('Airline')
     plt.xticks(rotation=45)
@@ -75,7 +78,8 @@ def viz():
     plt.figure(figsize=(10, 6))
     airline_data.plot(x='airline', y=['total_incidents', 'total_fatal_accidents', 
                                       'total_fatalities'], kind='bar')
-    plt.title(f'Total Incidents vs. Fatal Accidents vs. Total Fatalities for {selected_airline} (1985-2014)')
+    plt.title(f'Total Incidents vs. Fatal Accidents vs. '
+              f'Total Fatalities for {selected_airline} (1985-2014)')
     plt.ylabel('Counts')
     plt.xlabel('Airline')
     plt.xticks(rotation=0)  # No need to rotate for a single airline
@@ -95,7 +99,8 @@ def viz():
         plt.plot(periods, fatalities, marker='o', label=row['airline'])
 
     # Customize the plot
-    plt.title('Total Fatalities Change for Each Airline (1985-1999 vs 2000-2014)')
+    plt.title('Total Fatalities Change for Each Airline '
+              '(1985-1999 vs 2000-2014)')
     plt.ylabel('Number of Fatalities')
     plt.xlabel('Time Period')
     plt.legend(title='Airlines', bbox_to_anchor=(1.05, 1), loc='upper left')
@@ -111,12 +116,15 @@ def viz():
 
     # Prepare data for plotting
     periods = ['1985-1999', '2000-2014']
-    fatalities = [airline_data['fatalities_85_99'].values[0], airline_data['fatalities_00_14'].values[0]]
+    fatalities_85_99 = airline_data['fatalities_85_99'].values[0]
+    fatalities_00_14 = airline_data['fatalities_00_14'].values[0]
+    fatalities = [fatalities_85_99, fatalities_00_14]
 
     # Plotting
     plt.figure(figsize=(8, 5))
     plt.plot(periods, fatalities, marker='o')
-    plt.title(f'Total Fatalities Change for {selected_airline} (1985-1999 vs 2000-2014)')
+    plt.title(f'Total Fatalities Change for {selected_airline} '
+              '(1985-1999 vs 2000-2014)')
     plt.ylabel('Number of Fatalities')
     plt.xlabel('Time Period')
     plt.grid(True)

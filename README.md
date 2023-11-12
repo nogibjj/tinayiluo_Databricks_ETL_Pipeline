@@ -175,19 +175,19 @@ matplotlib
 
 ### Conclusion and Recommendations
 
-[Airline Safety ETL Pipeline Analysis](./Notebook_Folder/query_viz.ipynb)
+[Airline Safety ETL Pipeline Analysis](./Notebook_Folder/query_viz.py)
 
-Visualization 1: Total Incidents vs. Fatal Accidents vs. Total Fatalities for Each Airline (1985-2014)
++ Visualization 1: Total Incidents vs. Fatal Accidents vs. Total Fatalities for Each Airline (1985-2014)
 
-Incidents vs. Fatalities Disparity: It is noteworthy that some airlines, such as Aeroflot, with a high number of total incidents do not necessarily have a proportionately high number of fatalities. This could suggest effective emergency response and safety procedures that mitigate the severity of incidents. 
+  + Incidents vs. Fatalities Disparity: It is noteworthy that some airlines, such as Aeroflot, with a high number of total incidents do not necessarily have a proportionately high number of fatalities. This could suggest effective emergency response and safety procedures that mitigate the severity of incidents. 
 
-Visualization 2: Total Fatalities Change for Each Airline (1985-1999 vs 2000-2014)
++ Visualization 2: Total Fatalities Change for Each Airline (1985-1999 vs 2000-2014)
 
-Overall Improvement: Most airlines have shown a decrease in the number of fatalities over the two time periods, which is a positive trend. This suggests that overall, safety may have improved in the airline industry. 
+  + Overall Improvement: Most airlines have shown a decrease in the number of fatalities over the two time periods, which is a positive trend. This suggests that overall, safety may have improved in the airline industry. 
 
-Specific Airline Performance: Some airlines, such as Delta/Northwest and Saudi Arabian, have shown a significant decrease in fatalities, indicating a substantial improvement in their safety record. These airlines could be examined as case studies to understand what specific actions contributed to this improvement. 
+  + Specific Airline Performance: Some airlines, such as Delta/Northwest and Saudi Arabian, have shown a significant decrease in fatalities, indicating a substantial improvement in their safety record. These airlines could be examined as case studies to understand what specific actions contributed to this improvement. 
 
-Challenges for Some: Conversely, airlines like American and Air France have shown a significant increase in fatalities. This would be a point of concern, and it's recommended that management conduct an in-depth review of safety protocols, fleet maintenance, and pilot training programs. Understanding the reasons behind the increase is critical to reversing this trend.
+  + Challenges for Some: Conversely, airlines like American and Air France have shown a significant increase in fatalities. This would be a point of concern, and it's recommended that management conduct an in-depth review of safety protocols, fleet maintenance, and pilot training programs. Understanding the reasons behind the increase is critical to reversing this trend.
 
 ### References 
 

@@ -46,6 +46,17 @@ def viz():
     # Convert the query_result DataFrame to Pandas for plotting
     query_result_pd = query.toPandas()
 
+    # Bar Plot showing total Incidents vs Total Fatalities for all the Airlines (1985-1999 vs. 2000-2014)
+    plt.figure(figsize=(15, 7))
+    query_result_pd.plot(x='airline', y=['total_incidents', 'total_fatalities_85_99', 'total_fatalities_00_14'], kind='bar')
+    plt.title('Total Incidents vs. Total Fatalities for Each Airline (1985-1999 vs. 2000-2014)')
+    plt.ylabel('Counts')
+    plt.xlabel('Airline')
+    plt.xticks(rotation=45)
+    plt.legend(title='Metrics')
+    plt.tight_layout()
+    plt.show()
+
     # Bar Plot showing total Incidents vs. Total Fatalities for Alaska Airline (1985-1999 vs. 2000-2014)
     # Filter for the specific airline
     selected_airline = 'Air France'  

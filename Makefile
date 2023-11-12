@@ -1,17 +1,16 @@
 install:
-	pip install --upgrade pip &&\
-		pip install -r requirements.txt
+	pip install --upgrade pip && pip install -r requirements.txt
 
 test:
 	python -m pytest -vv --cov=main --cov=mylib test_*.py
 
-format:	
+format:
 	black *.py 
 
 lint:
-	#disable comment to test speed
-	#pylint --disable=R,C --ignore-patterns=test_.*?py *.py mylib/*.py
-	#ruff linting is 10-100X faster than pylint
+	# Disable comment to test speed
+	# pylint --disable=R,C --ignore-patterns=test_.*?py *.py mylib/*.py
+	# Ruff linting is 10-100X faster than pylint
 	ruff check *.py mylib/*.py
 
 container-lint:
@@ -20,6 +19,9 @@ container-lint:
 refactor: format lint
 
 deploy:
-	#deploy goes here
-		
+	# Deploy goes here
+
 all: install lint test format deploy
+
+job:
+	python run_job.py

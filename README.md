@@ -2,11 +2,12 @@
 
 Databricks ETL (Extract Transform Load) Pipeline
 
-Hello
+### Demo Video
+[Databricks ETL Pipeline For Airline Safety Analysis](https://youtu.be/8PpYg7W0Ocg)
 
 ### Introduction 
 
-This project develops a Databricks ETL(Extract, Transform, Load) Pipeline for retrieving and processing airline safety datasets, featuring a well-documented notebook for ETL operations, Delta Lake for storage, and Spark SQL for transformations. It ensures data integrity through robust error handling and data validation and includes data visualizations for insights. An automated Databricks API trigger highlights the focus on automation and continuous processing.
+This project develops a Databricks ETL(Extract, Transform, Load) Pipeline for retrieving and processing airline safety datasets, featuring a well-documented notebook for ETL operations, Delta Lake for storage, Spark SQL for transformations, and data visualizations for actionable insights. It ensures data integrity through robust error handling and data validation. An automated Databricks API trigger highlights the focus on automation and continuous processing.
 
 The workflow includes running a Makefile to perform tasks such as installation (`make install`), testing (`make test`), code formatting (`make format`) with Python Black, linting (`make lint`) with Ruff, and an all-inclusive task (`make all`) using `Github Actions`. This automation streamlines the data analysis process and enhances code quality.
 
@@ -179,7 +180,7 @@ matplotlib
 
 ### Conclusion and Recommendations
 
-[**Airline Safety ETL Pipeline Analysis**](./Notebook_Folder/Airline_Safety_ETL_Pipeline_Analysis.ipynb - Databricks.pdf)
+[**Airline Safety ETL Pipeline Analysis**](./Notebook_Folder/query_viz.py)
 
 + Visualization 1: Total Incidents vs. Fatal Accidents vs. Total Fatalities for Each Airline (1985-2014)
 
